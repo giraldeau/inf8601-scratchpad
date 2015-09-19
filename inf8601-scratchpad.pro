@@ -14,4 +14,5 @@ SUBDIRS += \
     11-tbb-parallel-for \
     12-tbb-parallel-reduce \
     13-tbb-parallel-sort \
-    14-speedup
+    14-speedup \
+    15-parallel_sort_perf
