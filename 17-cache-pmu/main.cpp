@@ -27,42 +27,12 @@ void write_linear(std::vector<int> &v)
 int main(int argc, char *argv[])
 {
     (void) argc; (void) argv;
-
-    perf_event_attr attr;
-    memset(&attr, 0, sizeof(attr));
-    attr.size = sizeof(attr);
-    attr.type = PERF_TYPE_HARDWARE;
-    //attr.config = PERF_COUNT_HW_CACHE_REFERENCES;
-    //attr.config = PERF_COUNT_HW_CACHE_MISSES;
-    //attr.config = PERF_COUNT_HW_CPU_CYCLES;
-    attr.config = PERF_COUNT_HW_INSTRUCTIONS;
-    attr.inherit = 1;
-    attr.disabled = 0;
-
-    pid_t tid = gettid();
-    int fd = sys_perf_event_open(&attr, tid, -1, -1, 0);
+    void *fn = (void *) sys_perf_event_open;
+    (void) fn;
 
     int samples = 10;
     long sum = 0;
 
-    int len = 1000;
-    std::vector<int> v(len);
-
-    for (int i = 0; i < samples; i++) {
-        long v1, v2;
-        int ret = 0;
-        ret = read(fd, &v1, sizeof(v1));
-
-        write_linear(v);
-
-        ret = read(fd, &v2, sizeof(v2));
-
-        long delta = v2 - v1;
-        qDebug() << "ret" << ret << "value" << delta;
-        sum += delta;
-    }
-    qDebug() << v[0];
     qDebug() << "\n  avg value" << sum / samples;
-    close(fd);
     return 0;
 }
