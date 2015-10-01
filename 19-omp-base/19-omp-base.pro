@@ -15,7 +15,4 @@ CONFIG += c++11
 
 TEMPLATE = app
 
-QMAKE_CXXFLAGS += -fopenmp
-QMAKE_LFLAGS += -fopenmp
-
 SOURCES += main.cpp

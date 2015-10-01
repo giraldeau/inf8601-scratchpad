@@ -37,7 +37,6 @@ void memset_benchmark()
     };
 
     auto memset_parallel = [&]() {
-        #pragma omp parallel for
         for (int i = 0; i < n; i++) {
             v[i] = i * i;
         }

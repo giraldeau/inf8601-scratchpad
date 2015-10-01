@@ -24,7 +24,6 @@ int main(int argc, char *argv[])
     int i = 0;
     QVector<int> v(n);
 
-    #pragma omp parallel for reduction(+:sum)
     for (i = 0; i < n; i++) {
         v[i] = i * factor;
         sum += v[i];
