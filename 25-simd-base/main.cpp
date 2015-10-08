@@ -16,29 +16,13 @@ float fadd_cpp(float x, float y)
 __attribute__((noinline))
 void array_addss_cpp(float *vector, float scalar, int length)
 {
-    for (int i = 0; i < length; i++) {
-        vector[i] = vector[i] + scalar;
-    }
+    /* TODO */
 }
 
 __attribute__((noinline))
 void array_addss_cpp_vect(float *vector, float scalar, int length)
 {
-    __m128 s = _mm_set_ps(scalar, scalar, scalar, scalar);
-
-    int chunks = length / 4;
-    int round_down = chunks * 4;
-    for (int i = 0; i < round_down; i+=4) {
-        __m128 d = _mm_loadu_ps(vector + i);
-        __m128 a = _mm_add_ps(d, s);
-        _mm_storeu_ps(vector + i, a);
-    }
-
-    // tail of the vector, if any
-    for (int i = round_down; i < length; i++) {
-        vector[i] = vector[i] + scalar;
-    }
-
+    /* TODO */
 }
 
 void assembly_ops()

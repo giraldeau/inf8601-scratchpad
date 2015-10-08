@@ -13,6 +13,5 @@ CONFIG   += console
 CONFIG   -= app_bundle
 
 TEMPLATE = app
-QMAKE_CXXFLAGS += -O2 -fopenmp-simd
 
 SOURCES += main.cpp

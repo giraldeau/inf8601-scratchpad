@@ -3,9 +3,7 @@
 __attribute__((noinline))
 void array_add(float *a, float *b, float *c, long n)
 {
-    for (long i = 0; i < n; i++) {
-        a[i] = b[i] + c[i];
-    }
+    /* TODO */
 }
 
 int main(int argc, char *argv[])
