@@ -2,6 +2,8 @@
 #include <cassert>
 #include <mpi.h>
 
+#define M_PI 3.14159
+
 /*
  * Calculer la valeur de PI en intégrant la fonction f(x) = 4 / (1 + x^2)
  * Source: Using MPI second edition, The MIT Press, 1999
