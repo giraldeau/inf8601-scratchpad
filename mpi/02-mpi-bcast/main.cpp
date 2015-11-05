@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 
     /* Communiquer la variable du maitre à tous les autres processus */
     qDebug() << "before bcast rank=" << rank << "n=" << n;
-    MPI_Bcast(&n, 1, MPI_INT, 0, MPI_COMM_WORLD);
+
     qDebug() << "after bcast  rank=" << rank << "n=" << n;
 
     assert(n == N);
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     double pi = 0.0;
 
     /* Rassembler la somme de toutes les variables vers le processus maitre */
-    MPI_Reduce(&local_pi, &pi, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+
 
     /*
      * Avec MPI_Reduce(), le résultat de la réduction est disponible
