@@ -1,0 +1,42 @@
+Ce programme reprend le numero 3 du controle periodique et le resout grace aux pthread_cond.
+Par contre, worker devait continuer a rouler lorsque start_threads retourne.
+
+Fonctionnement:
+worker:
+	Comme start_threads doit pouvoir retourner avant que les workers finissent, il faut copier
+	les arguments localement. Cela sera fait grâce à memcpy. À chaque copie d'arguments, le compte
+	de copyCount est augmenté (de façon synchrone) pour pouvoir permettre de signaler la condition
+	que tout les arguments sont copiés et permettre à start_threads de quitter.
+	
+	Un certain travail est simuler avec un sleep et un autre compteur est augmenté. Après
+	l'augmentation on regarde si le compteur est égal au numbre de threads et si c'est le cas
+	on signalera que la condition est vrai et main pourra sortir.
+
+start_threads:
+	start_threads part les threads. Il attendera la condition qui assure que tout les arguments 
+	ont été copiés localement par les workers avant de retourner.
+
+main:
+	Défini les variables de départ et appel start_threads. Il attendera la condition qui
+	indique que tout les threads on finis leur travail.
+
+
+Pourquoi pthread_cond_signal au lieux de pthread_cond_broadcast?
+	
+	La différence entre signal et broadcast est que broadcast va débarrer tout les threads qui
+	attende sur la condition et signal en libère au moins 1. Dans les deux cas, si aucun thread
+	est en attente sur la condition, il n'y aura aucun effet. 
+
+Pourquoi le lock de mutex avant le pthread_cond_wait?
+
+	Selon la documentation "They shall be called with mutex locked by the calling thread
+	or undefined behavior results."
+
+Pourquoi la boucle de condition autour des pthread_cond_wait?
+
+	Pour deux raisons:
+	1) Il se peut que la condition soit devenue vraie avant qu'on puisse faire le wait.
+	2) pthread_cond_wait peut avoir des "Spurious wakeup". Ce qui veut dire qu'il retourne même
+	   si la condition n'est pas signalée. Ce thread de stackoverflow explique un peu les 
+	   fondements de ce comportement "http://stackoverflow.com/questions/8594591/why-does-pthread-cond-wait-have-spurious-wakeups"
+	
