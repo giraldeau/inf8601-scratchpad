@@ -1,5 +1,5 @@
 #include <pthread.h>
-#include<iostream>
+#include <iostream>
 #include <unistd.h>
 #include <string.h>
 #include <stdio.h>
@@ -92,9 +92,9 @@ void start_threads(int n, void * data, pthread_t *threads) {
 int main(int argc, char *argv[])
 {
     (void) argc; (void) argv;
-    countMax = 26; // TODO: use strlen() instead of hardcoding value
-    pthread_t threads[countMax];
     char data[] = "abcdefghijklmnopqrstuvwxyz";
+    countMax = strlen(data);
+    pthread_t threads[countMax];
 
     start_threads(countMax, &data, threads);
 
