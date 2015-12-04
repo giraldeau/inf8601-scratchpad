@@ -1,0 +1,9 @@
+# C/C++ objects and libs
+*.o
+
+# Qt
+*.debug
+*.moc
+
+# CMake
+Makefile
