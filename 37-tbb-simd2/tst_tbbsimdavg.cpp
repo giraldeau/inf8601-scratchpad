@@ -14,6 +14,7 @@ private Q_SLOTS:
     void testCaseSerial();
     void testCaseTbb();
     void testCaseTbbSimd();
+    void testCaseTbbSimdv1();
 };
 
 TbbSimdAvg::TbbSimdAvg()
@@ -39,6 +40,48 @@ void mean3_tbb(QVector<float> &m, const QVector<float> &x)
 }
 
 /* Auteur: Valentin Vendengeon */
+void mean_simd_tbb_v1 (QVector<float> &m, const QVector<float> &x)
+{
+    float *m_temp = new float[x.size()];
+    tbb::parallel_for (tbb::blocked_range <int>(0,(x.size() - 1) / 4),
+    [&](tbb::blocked_range <int>&range)
+    {
+        QVector<float> x1(4);
+        QVector<float> x2(4);
+        QVector<float> x3(4);
+
+        for (uint i=range.begin();i<range.end();i++)
+        {
+            int j;
+            for (j=0;j<4;j++)
+            {
+                x1[j]=i*(4)+j;
+                x2[j]=i*(4)+j+1;
+                x3[j]=i*(4)+j+2;
+            }
+            __m128 v1 = _mm_loadu_ps(x1.data());
+            __m128 v2 = _mm_loadu_ps(x2.data());
+            __m128 v3 = _mm_loadu_ps(x3.data());
+
+            __m128 a = _mm_add_ps(v1,v2);
+            __m128 b = _mm_add_ps(a, v3);
+
+            _mm_storeu_ps(x1.data(), b);
+
+
+            for (j=0;j<4;j++)
+            {
+               m_temp[i*(4)+j]=x1[j]*(1/3.0f);;
+            }
+        }
+    });
+    int j;
+    for (j=0;j<x.size();j++)
+    {
+       m[j]=m_temp[j];;
+    }
+}
+
 void mean_simd_tbb(QVector<float> &m, const QVector<float> &x)
 {
     float f = 1/3.0f;
@@ -99,6 +142,17 @@ void TbbSimdAvg::testCaseTbb()
 
     QBENCHMARK {
         mean3_tbb(out1, in);
+    }
+}
+
+void TbbSimdAvg::testCaseTbbSimdv1()
+{
+    int n = 1E6;
+    QVector<float> in(n);
+    QVector<float> out1(n);
+
+    QBENCHMARK {
+        mean_simd_tbb_v1(out1, in);
     }
 }
 
