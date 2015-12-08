@@ -34,7 +34,6 @@ SUBDIRS += \
     29-deadlock \
     30-bitfields \
     31-static-check \
-    32-arithmetic-intensity \
     33-bandwith-flops \
     34-stream \
     35-roofline \
