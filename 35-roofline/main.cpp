@@ -4,6 +4,7 @@
 #include <functional>
 #include <iostream>
 #include "tbb/tbb.h"
+#include <mmintrin.h>
 
 // compute peak FP
 // normalize to peak

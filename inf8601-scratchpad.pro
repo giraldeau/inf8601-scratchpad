@@ -37,4 +37,5 @@ SUBDIRS += \
     33-bandwith-flops \
     34-stream \
     35-roofline \
-    36-cache-size
+    36-cache-size \
+    37-tbb-simd2
