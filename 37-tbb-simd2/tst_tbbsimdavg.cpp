@@ -43,8 +43,8 @@ void mean3_tbb(QVector<float> &m, const QVector<float> &x)
 void mean_simd_tbb_v1 (QVector<float> &m, const QVector<float> &x)
 {
     float *m_temp = new float[x.size()];
-    tbb::parallel_for (tbb::blocked_range <int>(0,(x.size() - 1) / 4),
-    [&](tbb::blocked_range <int>&range)
+    tbb::parallel_for (tbb::blocked_range <uint>(0,(x.size() - 1) / 4),
+    [&](tbb::blocked_range <uint>&range)
     {
         QVector<float> x1(4);
         QVector<float> x2(4);
