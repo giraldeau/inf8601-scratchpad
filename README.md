@@ -7,7 +7,7 @@ Demo and examples for the INF8601 course at Polytechnique Montréal.
 First, install the dependencies. On Ubuntu Linux:
 
 ```
-apt-get install build-essential qtcreator qtbase5-dev libtbb-dev
+apt-get install build-essential qtcreator qtbase5-dev libtbb-dev libopenmpi-dev clang
 ```
 
 Open the project file inf8601-scratchpad.pro with qtcreator. The build is a
