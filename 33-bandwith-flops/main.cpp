@@ -1,6 +1,7 @@
 #include <QDebug>
 #include "benchmark.h"
 #include <xmmintrin.h>
+#include <cmath>
 
 #include "workload.h"
 

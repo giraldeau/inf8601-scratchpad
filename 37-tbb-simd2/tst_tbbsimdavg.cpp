@@ -1,6 +1,7 @@
 #include <QString>
 #include <QtTest>
 #include <tbb/tbb.h>
+#include <x86intrin.h>
 
 class TbbSimdAvg : public QObject
 {
